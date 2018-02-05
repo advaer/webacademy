@@ -1,19 +1,22 @@
-from sqlalchemy import Table, MetaData, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import mapper
+from sqlalchemy import Table, MetaData, Column, Integer, String
+from sqlalchemy.orm import mapper, sessionmaker
 
 from sqlalchemy import create_engine
-engine = create_engine('sqlite:///:memory:') #, echo=True)
-
+engine = create_engine('sqlite:///:memory:')
+# engine = create_engine('sqlite:///:memory:', echo=True)
 
 metadata = MetaData()
 
-user = Table('user', metadata,
-            Column('id', Integer, primary_key=True),
-            Column('name', String(50)),
-            Column('fullname', String(50)),
-            Column('password', String(12))
-        )
+user = Table(
+        'user',
+        metadata,
+        Column('id', Integer, primary_key=True),
+        Column('name', String(50)),
+        Column('fullname', String(50)),
+        Column('password', String(12))
+    )
 user.create(engine)
+
 
 class User(object):
     def __init__(self, name, fullname, password):
@@ -27,7 +30,6 @@ class User(object):
 
 mapper(User, user)
 
-from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -36,8 +38,8 @@ print(ed_user)
 
 session.add(ed_user)
 
-ed_user.password = 'f8s7ccs'
-ed_user.fullname = 'FF'
+ed_user.password = 'brknbd'
+ed_user.fullname = 'Walter White'
 
 print('is_modified', session.is_modified(ed_user))
 

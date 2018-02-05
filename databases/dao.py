@@ -2,8 +2,8 @@ import sqlite3
 
 
 class AuthorDTO(object):
-    def __init__(self, id, name):
-        self.id = id
+    def __init__(self, pk, name):
+        self.id = pk
         self.name = name
 
     def __str__(self):
@@ -17,25 +17,26 @@ class AuthorDAO(object):
     def _connect(self):
         return sqlite3.connect(self.db_name)
 
-    def find(self, id):
+    def find(self, pk):
         with self._connect() as conn:
             cur = conn.cursor()
-            cur.execute('SELECT * FROM author WHERE id=?', (id,))
-            id, name = cur.fetchone()
-            return AuthorDTO(id, name)
+            cur.execute('SELECT * FROM author WHERE id=?', (pk,))
+            pk, name = cur.fetchone()
+            return AuthorDTO(pk, name)
 
-    def update(self, id, name):
-        raise Exception('Implement me')
+    def update(self, pk, name):
+        raise NotImplementedError
 
     def insert(self, name):
-        raise Exception('Implement me')
+        raise NotImplementedError
 
-    def delete(self, id):
-        raise Exception('Implement me')
+    def delete(self, pk):
+        raise NotImplementedError
 
 
 if __name__ == '__main__':
     dao = AuthorDAO('myLibrary.db')
     a1 = dao.find(2)
-    print (a1)
+    print(a1)
+    print(dao.find(1))
     # dao.update(2, 'new name')

@@ -17,7 +17,7 @@ print("Books:")
 for row in cur:
     print(row)
 
-cur.execute('INSERT INTO author(name) VALUES("David Rise")')
+cur.execute('INSERT INTO author(name) VALUES("Kirk Hammett")')
 conn.commit()
 
 cur.execute('SELECT * FROM author')
@@ -25,9 +25,8 @@ print("Authors2:")
 rows = cur.fetchall()
 print(rows)
 
-print("Select:")
+print("Select1:")
 cur.execute('SELECT * FROM author WHERE id=%i' % 2)
-print(cur.rowcount)
 print(cur.fetchone())
 
 print("Select2:")
